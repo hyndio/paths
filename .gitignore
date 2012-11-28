@@ -1,8 +1,5 @@
-*.DS_Store
-Thumbs.db
 bin
 target
-src/main/filters/*
 src/main/webapp/META-INF
 .classpath
 .project
@@ -11,4 +8,3 @@ src/main/webapp/META-INF
 *.ipr
 *.iws
 *.idea
-attendees.csv

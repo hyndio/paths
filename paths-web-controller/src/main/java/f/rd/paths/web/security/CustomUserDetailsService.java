@@ -9,7 +9,6 @@ package f.rd.paths.web.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -22,7 +21,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,13 +63,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return user;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<GrantedAuthority> loadUserAuthoritiesByName(String username) {
 		try {
 			List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 			List<String> authorityNames = this.loadUserAuthorities(username);
 			for (String roleName : authorityNames) {
-				GrantedAuthority authority = new GrantedAuthorityImpl(roleName);
+				GrantedAuthority authority = new SimpleGrantedAuthority(roleName);
 				auths.add(authority);
 			}
 			return auths;

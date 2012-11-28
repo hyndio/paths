@@ -61,7 +61,8 @@
     	<property name="dataSource" ref="dataSource"/>
     	<property name="packagesToScan">
 			<list>
-				<value>f.rd.paths.entity</value>
+				<value>f.rd.paths.web.security.model</value>
+				<value>f.rd.paths.organization.model</value>
 			</list>
 		</property>
         <property name="hibernateProperties">
