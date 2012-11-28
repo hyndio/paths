@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://airline.lock.com/slowly/schemas"
+	xmlns:slowly="http://airline.lock.com/slowly/schemas" elementFormDefault="qualified">
+	
+	<element name="SlowlyRequest">
+		<complexType>
+			<all>
+				<element name="CurrentSpeed" type="slowly:CurrentSpeedType"></element>
+			</all>
+		</complexType>
+	</element>
+	
+	<complexType name="CurrentSpeedType">
+		<sequence>
+			<element name="Player" type="string"></element>
+			<element name="Start" type="integer"></element>
+			<element name="End" type="integer"></element>
+			<element name="Threshold" type="integer"></element>
+			<element name="Max" type="integer"></element>
+		</sequence>
+	</complexType>
+	
+</schema>

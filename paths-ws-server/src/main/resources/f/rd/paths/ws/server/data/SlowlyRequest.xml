@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SlowlyRequest xmlns="http://airline.lock.com/slowly/schemas">
+
+	<CurrentSpeed>
+		<Player>Lock</Player>
+		<Start>100</Start>
+		<End>1000</End>
+		<Threshold>1050</Threshold>
+		<Max>1200</Max>
+	</CurrentSpeed>
+	
+	
+</SlowlyRequest>

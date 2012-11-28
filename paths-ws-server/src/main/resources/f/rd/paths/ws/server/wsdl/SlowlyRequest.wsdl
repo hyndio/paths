@@ -1,0 +1,49 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://airline.lock.com/slowly/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://airline.lock.com/slowly/schemas" targetNamespace="http://airline.lock.com/slowly/schemas">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:slowly="http://airline.lock.com/slowly/schemas"
+			elementFormDefault="qualified" targetNamespace="http://airline.lock.com/slowly/schemas">
+			<element name="SlowlyRequest">
+				<complexType>
+					<all>
+						<element name="CurrentSpeed" type="slowly:CurrentSpeedType" />
+					</all>
+				</complexType>
+			</element>
+			<complexType name="CurrentSpeedType">
+				<sequence>
+					<element name="Player" type="string" />
+					<element name="Start" type="integer" />
+					<element name="End" type="integer" />
+					<element name="Threshold" type="integer" />
+					<element name="Max" type="integer" />
+				</sequence>
+			</complexType>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="SlowlyRequest">
+		<wsdl:part element="tns:SlowlyRequest" name="SlowlyRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="slowlySpeed">
+		<wsdl:operation name="Slowly">
+			<wsdl:input message="tns:SlowlyRequest" name="SlowlyRequest"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="slowlySpeedSoap11" type="tns:slowlySpeed">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Slowly">
+			<soap:operation soapAction="" />
+			<wsdl:input name="SlowlyRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="slowlySpeedService">
+		<wsdl:port binding="tns:slowlySpeedSoap11" name="slowlySpeedSoap11">
+			<soap:address
+				location="http://localhost:8080/airline-web-app/ws/slowlySpeedService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

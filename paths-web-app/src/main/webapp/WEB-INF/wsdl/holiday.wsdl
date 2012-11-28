@@ -1,0 +1,53 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://lockstd.com/hr/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://lockstd.com/hr/schemas" targetNamespace="http://lockstd.com/hr/schemas">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:hr="http://lockstd.com/hr/schemas"
+			elementFormDefault="qualified" targetNamespace="http://lockstd.com/hr/schemas">
+			<element name="HolidayRequest">
+				<complexType>
+					<all>
+						<element name="Holiday" type="hr:HolidayType" />
+						<element name="Employee" type="hr:EmployeeType" />
+					</all>
+				</complexType>
+			</element>
+			<complexType name="HolidayType">
+				<sequence>
+					<element name="StartDate" type="date" />
+					<element name="EndDate" type="date" />
+				</sequence>
+			</complexType>
+			<complexType name="EmployeeType">
+				<sequence>
+					<element name="Number" type="integer" />
+					<element name="FirstName" type="string" />
+					<element name="LastName" type="string" />
+				</sequence>
+			</complexType>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="HolidayRequest">
+		<wsdl:part element="tns:HolidayRequest" name="HolidayRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="HumanResource">
+		<wsdl:operation name="Holiday">
+			<wsdl:input message="tns:HolidayRequest" name="HolidayRequest"></wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="HumanResourceSoap11" type="tns:HumanResource">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Holiday">
+			<soap:operation soapAction="" />
+			<wsdl:input name="HolidayRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="HumanResourceService">
+		<wsdl:port binding="tns:HumanResourceSoap11" name="HumanResourceSoap11">
+			<soap:address location="http://localhost:8080/airline-web-app/ws/holidayService/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
