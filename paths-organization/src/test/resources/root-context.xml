@@ -15,8 +15,6 @@
 	
     <context:annotation-config />
     <context:component-scan base-package="f.rd.paths.organization.service" />
-    <context:component-scan base-package="f.rd.paths.web.security.extend.impl" />
-    <context:component-scan base-package="f.rd.paths.web.security.service" />
     
     <!-- 数据连接配置信息 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -43,7 +41,6 @@
     	<property name="packagesToScan">
 			<list>
 				<value>f.rd.paths.organization.model</value>
-				<value>f.rd.paths.web.security.model</value>
 			</list>
 		</property>
         <property name="hibernateProperties">

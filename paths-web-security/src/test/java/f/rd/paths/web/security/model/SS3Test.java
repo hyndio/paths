@@ -8,18 +8,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import f.rd.paths.web.security.extend.impl.UserDetailsImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"/root-context.xml"})
-public class SS3Test {
+public class SS3Test extends TestConf {
 	
 	@Autowired
 	private SessionFactory sessionFactory;

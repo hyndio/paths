@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import f.rd.paths.web.security.model.Authority;
 import f.rd.paths.web.security.model.User;
 import f.rd.paths.web.security.service.AuthorityService;
 import f.rd.paths.web.security.service.UserService;
@@ -55,10 +56,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private List<GrantedAuthority> loadUserAuthoritiesByName(String username) {
 		try {
 			List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-			List<String> authorityNames = this.authorityService.getAuthorityNames(username);
-			for (String name: authorityNames) {
-				GrantedAuthority authority = new SimpleGrantedAuthority(name);
-				auths.add(authority);
+			List<Authority> authority = this.authorityService.getAuthorities(username);
+			for (Authority auth: authority) {
+				GrantedAuthority gauth = new SimpleGrantedAuthority(auth.getName());
+				auths.add(gauth);
 			}
 			return auths;
 		} catch (RuntimeException re) {
