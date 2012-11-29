@@ -27,8 +27,8 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
  * 或者自己实现一个matcher。这里的角色和资源都可以从数据库中获取，建议通过我们封装的平台级持久层管理类获取和管理。
  * 
  */
-public class MyInvocationSecurityMetadataSource implements
-		FilterInvocationSecurityMetadataSource {
+public class MyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+	
 	private UrlMatcher urlMatcher = new AntUrlPathMatcher();
 	private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
@@ -38,6 +38,7 @@ public class MyInvocationSecurityMetadataSource implements
 
 	private void loadResourceDefine() {
 		resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
+		
 		Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
 		ConfigAttribute ca = new SecurityConfig("ROLE_USER");
 		atts.add(ca);
@@ -50,8 +51,7 @@ public class MyInvocationSecurityMetadataSource implements
 	}
 
 	// According to a URL, Find out permission configuration of this URL.
-	public Collection<ConfigAttribute> getAttributes(Object object)
-			throws IllegalArgumentException {
+	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		// guess object is a URL.
 		String url = ((FilterInvocation) object).getRequestUrl();
 		Iterator<String> ite = resourceMap.keySet().iterator();

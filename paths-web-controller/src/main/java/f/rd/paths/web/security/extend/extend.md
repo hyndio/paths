@@ -17,11 +17,12 @@
 		参考：org.springframework.security.authentication.dao.DaoAuthenticationProvider
 		
 ## 3. 实现一个自己定义过滤器：增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。
-	实现：org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource接口
-	参考：org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource
 	
 ## 4. 获取数据库中所有的权限及对应的资源URL：资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色去访问。
 	CustomInvocationSecurityMetadataSourceService
+	
+	实现：org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource接口
+	参考：org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource
 	
 ## 5. 访问决策器，决定某个用户具有的权限，是否有足够的权限去访问某个资源
 	实现：org.springframework.security.access.AccessDecisionManager

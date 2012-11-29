@@ -25,8 +25,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
  * <p>
  * 
  */
-public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor
-		implements Filter {
+public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
 	private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
@@ -46,8 +45,8 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor
 	 * @throws ServletException
 	 *             if the filter chain fails
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+			throws IOException, ServletException {
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
 	}
@@ -60,8 +59,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor
 		return FilterInvocation.class;
 	}
 
-	public void invoke(FilterInvocation fi) throws IOException,
-			ServletException {
+	public void invoke(FilterInvocation fi) throws IOException, ServletException {
 		InterceptorStatusToken token = super.beforeInvocation(fi);
 		try {
 			fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
@@ -74,8 +72,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor
 		return this.securityMetadataSource;
 	}
 
-	public void setSecurityMetadataSource(
-			FilterInvocationSecurityMetadataSource newSource) {
+	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource newSource) {
 		this.securityMetadataSource = newSource;
 	}
 

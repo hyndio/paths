@@ -23,10 +23,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public class MyUserDetailService implements UserDetailsService {
 
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException, DataAccessException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+		
 		Collection<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 		GrantedAuthority auth2 = new SimpleGrantedAuthority("ROLE_ADMIN");
+		
 		// auths.add(auth2);
 		if (username.equals("cyu")) {
 			auths = new ArrayList<GrantedAuthority>();
