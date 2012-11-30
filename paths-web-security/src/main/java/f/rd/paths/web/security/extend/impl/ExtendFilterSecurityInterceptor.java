@@ -1,10 +1,8 @@
-﻿/*
- * @(#) MyFilterSecurityInterceptor.java  2011-3-23 上午07:53:03
- *
- * Copyright 2011 by Sparta 
+/**
+ * @author hyd 2012-11-30 上午9:01:46 
+ * @version 1.0
  */
-
-package f.rd.paths.web.security;
+package f.rd.paths.web.security.extend.impl;
 
 import java.io.IOException;
 
@@ -15,27 +13,37 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
-/**
- * 该过滤器的主要作用就是通过spring著名的IoC生成securityMetadataSource。
- * securityMetadataSource相当于本包中自定义的MyInvocationSecurityMetadataSourceService。
- * 该MyInvocationSecurityMetadataSourceService的作用提从数据库提取权限和资源，装配到HashMap中，
- * 供Spring Security使用，用于权限校验。
- * 
- * @author sparta 11/3/29
- * 
+/** 
+ * 扩展的FilterSecurityInterceptor
+ * <p>
+ *  
  */
-public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
+public class ExtendFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
-	@Autowired
 	private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
+	/**
+	 * Method that is actually called by the filter chain. Simply delegates to
+	 * the {@link #invoke(FilterInvocation)} method.
+	 * 
+	 * @param request
+	 *            the servlet request
+	 * @param response
+	 *            the servlet response
+	 * @param chain
+	 *            the filter chain
+	 * 
+	 * @throws IOException
+	 *             if the filter chain fails
+	 * @throws ServletException
+	 *             if the filter chain fails
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
 			throws IOException, ServletException {
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
@@ -59,22 +67,18 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
 		}
 	}
 
-	@Override
 	public SecurityMetadataSource obtainSecurityMetadataSource() {
 		return this.securityMetadataSource;
 	}
 
-	public void setSecurityMetadataSource(
-			FilterInvocationSecurityMetadataSource securityMetadataSource) {
-		this.securityMetadataSource = securityMetadataSource;
+	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource newSource) {
+		this.securityMetadataSource = newSource;
 	}
 
 	public void destroy() {
-
 	}
 
-	public void init(FilterConfig filterconfig) throws ServletException {
-
+	public void init(FilterConfig arg0) throws ServletException {
 	}
 
 }

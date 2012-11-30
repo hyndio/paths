@@ -42,7 +42,7 @@
         </session-management>
         
         <!-- ### 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。  -->
-  		<custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/> 
+  		<custom-filter ref="extendFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/> 
         
     </http>
     
@@ -59,23 +59,20 @@
     </beans:bean>-->
 
 	<!-- 一个自定义的filter，必须包含authenticationManager, accessDecisionManager,securityMetadataSource三个属性。 -->
-	<beans:bean id="customFilterSecurityInterceptor" class="f.rd.paths.web.security.CustomFilterSecurityInterceptor">
+	<beans:bean id="extendFilterSecurityInterceptor" class="f.rd.paths.web.security.extend.impl.ExtendFilterSecurityInterceptor">
 		<beans:property name="authenticationManager" ref="authenticationManager" />
-		<beans:property name="accessDecisionManager" ref="customAccessDecisionManager" />
-		<beans:property name="securityMetadataSource" ref="customSecurityMetadataSource" />
+		<beans:property name="accessDecisionManager" ref="extendAccessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="extendSecurityMetadataSource" />
 	</beans:bean>
 
 	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源。 -->
-	<beans:bean id="customAccessDecisionManager" class="f.rd.paths.web.security.CustomAccessDecisionManager" />
+	<beans:bean id="extendAccessDecisionManager" class="f.rd.paths.web.security.extend.impl.ExtendAccessDecisionManager" />
 
 	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色去访问。 -->
-	<beans:bean id="customSecurityMetadataSource" class="f.rd.paths.web.security.CustomInvocationSecurityMetadataSourceService" />
+	<beans:bean id="extendSecurityMetadataSource" class="f.rd.paths.web.security.extend.impl.ExtendInvocationSecurityMetadataSource" />
 
 	<!-- 用户详细信息管理：数据源、用户缓存（通过数据库管理用户、角色、权限、资源）。 -->
-	<beans:bean id="userDetailsManager" class="f.rd.paths.web.security.CustomUserDetailsService">
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="userCache" ref="userCache" />
-	</beans:bean>
+	<beans:bean id="extendUserDetailsManager" class="f.rd.paths.web.security.extend.impl.UserDetailsServiceImpl" />
 	
     <authentication-manager alias="authenticationManager">
     	<!-- 方案一：将用户名、密码、所属角色完全配置在这里 
@@ -92,7 +89,7 @@
         </authentication-provider>-->
         
         <!-- 方案三： 自己扩展 -->
-        <authentication-provider user-service-ref="userDetailsManager">
+        <authentication-provider user-service-ref="extendUserDetailsManager">
 			<password-encoder ref="passwordEncoder">
 				<!-- 盐值：用户名 -->
 				<salt-source user-property="username" />

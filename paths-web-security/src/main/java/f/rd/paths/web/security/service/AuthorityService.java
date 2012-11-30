@@ -29,4 +29,10 @@ public interface AuthorityService {
 	 * @return
 	 */
 	List<Authority> getAuthorities(List<JobRole> roles);
+	
+	/**
+	 * 获取所有的权限
+	 * @return
+	 */
+	List<Authority> getAllAuthorities();
 }

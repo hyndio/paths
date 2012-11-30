@@ -18,11 +18,16 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- scan for controller beans -->
     <context:component-scan base-package="f.rd.paths">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     
+    <!-- scan for service beans -->
     <context:annotation-config />
+    <context:component-scan base-package="f.rd.paths.organization.service" />
+    <context:component-scan base-package="f.rd.paths.web.security.extend.impl" />
+    <context:component-scan base-package="f.rd.paths.web.security.service" />
     
     <!-- i18n -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -61,8 +66,8 @@
     	<property name="dataSource" ref="dataSource"/>
     	<property name="packagesToScan">
 			<list>
-				<value>f.rd.paths.web.security.model</value>
 				<value>f.rd.paths.organization.model</value>
+				<value>f.rd.paths.web.security.model</value>
 			</list>
 		</property>
         <property name="hibernateProperties">

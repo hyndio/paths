@@ -24,7 +24,7 @@
 			<version>${org.hibernate-version}</version>
 		</dependency>
 
-		<!-- JSR 303 with Hibernate Validator -->
+		<!-- JSR 303 with Hibernate Validator 
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -34,7 +34,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>${org.hibernate-version}</version>
-		</dependency>
+		</dependency>-->
 		
 		<dependency>
 			<groupId>org.hibernate</groupId>

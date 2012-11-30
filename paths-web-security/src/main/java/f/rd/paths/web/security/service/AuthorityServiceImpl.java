@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -85,6 +86,16 @@ public class AuthorityServiceImpl implements AuthorityService {
 		Criteria criteria = session.createCriteria(RoleAuthority.class);
 		criteria.add(Restrictions.in("role", roleIds));
 		return criteria.list();
+	}
+
+	/* (non-Javadoc)
+	 * @see f.rd.paths.web.security.service.AuthorityService#getAllAuthorities()
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Authority> getAllAuthorities() {
+		Session session = this.sessionFactory.openSession();
+		Query query = session.createQuery("from Authority a");
+		return query.list();
 	}
 
 }
