@@ -35,8 +35,8 @@ INSERT INTO `ss3_role_auth` VALUES(1, 1, 1);
 INSERT INTO `ss3_role_auth` VALUES(2, 2, 2);
 
 ## 资源
-INSERT INTO `ss3_resource` VALUES(1,'用户管理','http://www.g.cn',null,1);
-INSERT INTO `ss3_resource` VALUES(2,'权限管理','http://www.z.cn',null,2);
+INSERT INTO `ss3_resource` VALUES(1,'用户管理','/secure/extreme/index.jsp',null,1);
+INSERT INTO `ss3_resource` VALUES(2,'权限管理','/secure/index.jsp',null,2);
 
 ## 关联表: 权限与资源
 INSERT INTO `ss3_auth_reso` VALUES(1, 1, 1);
