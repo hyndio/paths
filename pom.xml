@@ -84,7 +84,6 @@
 		<module>paths-entity</module>
 		<module>paths-ws-server</module>
 		<module>paths-ws-client</module>
-		<module>paths-groovy</module>
     	<module>paths-web-security</module>
     	<module>paths-organization</module>
 	</modules>

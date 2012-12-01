@@ -43,12 +43,6 @@
 			<version>${project.version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>paths-groovy</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		
 		<!-- 定时任务调试使用 -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>

@@ -4,6 +4,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class HibernateConfigTest {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Ignore
 	@Test
 	public void retrieveAccount() {
 		// not part of a transaction, so we need to open a session manually
@@ -33,6 +35,7 @@ public class HibernateConfigTest {
 		Assert.assertEquals(a.getCashBalance(), 500.0, 0.01);
 	}
 	
+	@Ignore
 	@Test @Transactional
 	public void updateAccount() {
 		Session session = sessionFactory.getCurrentSession();
