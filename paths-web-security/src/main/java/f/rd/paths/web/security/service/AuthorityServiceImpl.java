@@ -39,6 +39,22 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Autowired
 	private RoleSerivce roleSerivce;
 
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public void setJobService(JobService jobService) {
+		this.jobService = jobService;
+	}
+
+	public void setRoleSerivce(RoleSerivce roleSerivce) {
+		this.roleSerivce = roleSerivce;
+	}
+
 	/* (non-Javadoc)
 	 * @see f.rd.paths.web.security.service.AuthorityService#getAuthorities(java.lang.String)
 	 */

@@ -29,6 +29,10 @@ public class ExtendAccessDecisionManager implements AccessDecisionManager {
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
 		
+		for (int i = 0; i < 10; i++) {
+			System.out.println("ExtendAccessDecisionManager: decide");
+		}
+		
 		if (configAttributes == null) {
 			return;
 		}

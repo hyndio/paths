@@ -23,6 +23,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	/**
 	 * 获取用户登录信息
 	 * @param staff 人员标识

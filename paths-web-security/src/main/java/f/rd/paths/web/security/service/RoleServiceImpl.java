@@ -22,11 +22,15 @@ import f.rd.paths.web.security.model.JobRole;
  * <p>
  *  
  */
-@Service
+@Service("roleService")
 public class RoleServiceImpl implements RoleSerivce {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	/* (non-Javadoc)
 	 * @see f.rd.paths.web.security.service.RoleSerivce#getJobRole(java.lang.Integer)

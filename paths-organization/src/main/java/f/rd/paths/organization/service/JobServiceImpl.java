@@ -20,11 +20,15 @@ import f.rd.paths.organization.model.StaffJob;
  * <p>
  *  
  */
-@Service
+@Service("jobService")
 public class JobServiceImpl implements JobService {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	/* (non-Javadoc)
 	 * @see f.rd.paths.organization.service.JobService#getStaffJob(java.lang.Integer)
