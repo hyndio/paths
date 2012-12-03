@@ -48,11 +48,6 @@ public class ExtendInvocationSecurityMetadataSource implements FilterInvocationS
 	}
 	
 	private void loadResourceDefine() {
-		
-		for (int i = 0; i < 10; i++) {
-			System.out.println("ExtendInvocationSecurityMetadataSource: ***loadResourceDefine***");
-		}
-		
 		// 数据库连接
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/root-context.xml");
 		SessionFactory sessionFactory = (SessionFactory) context.getBean("sessionFactory");
@@ -82,11 +77,6 @@ public class ExtendInvocationSecurityMetadataSource implements FilterInvocationS
 
 	// 根据URL，找到相关的权限配置。
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		
-		for (int i = 0; i < 10; i++) {
-			System.out.println("ExtendInvocationSecurityMetadataSource: getAttributes");
-		}
-		
 		// object 是一个URL，被用户请求的url。
 		String url = ((FilterInvocation) object).getRequestUrl();
         int firstQuestionMarkIndex = url.indexOf("?");

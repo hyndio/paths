@@ -46,11 +46,6 @@ public class ExtendFilterSecurityInterceptor extends AbstractSecurityInterceptor
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
 			throws IOException, ServletException {
-		
-		for (int i = 0; i < 10; i++) {
-			System.out.println("-----Here I am!-----");
-		}
-		
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
 	}

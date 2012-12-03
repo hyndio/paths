@@ -28,17 +28,9 @@ public class ExtendAccessDecisionManager implements AccessDecisionManager {
 	// 3, If not match corresponding authentication, throw a AccessDeniedException.
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		
-		for (int i = 0; i < 10; i++) {
-			System.out.println("ExtendAccessDecisionManager: decide");
-		}
-		
 		if (configAttributes == null) {
 			return;
 		}
-		
-		System.out.println(object.toString()); // object is a URL.
-		
 		Iterator<ConfigAttribute> ite = configAttributes.iterator();
 		while (ite.hasNext()) {
 			ConfigAttribute ca = ite.next();
