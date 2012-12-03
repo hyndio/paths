@@ -27,9 +27,8 @@ import org.springframework.web.context.ServletContextAware;
 
 
 /**
- * <p>
  * Markdown格式的文档
- * </p>
+ * <p>
  * 
  * @date 2012-11-14 上午9:30:09
  * 
