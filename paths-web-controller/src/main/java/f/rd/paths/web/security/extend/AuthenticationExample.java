@@ -15,9 +15,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * <p>
  * 验证过程测试
- * </p>
+ * <p>
  * 
  */
 public class AuthenticationExample {

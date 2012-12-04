@@ -4,6 +4,6 @@ define(function(require, exports, module) {
 	var $ = require("jquery.1.8.2.sea.js");
 	//require("/resources/bootstrap/js/bootstrap-alert.js")($);
 	
-	$("#sss").empty().html("???");
+	$("#sss").empty().html("jQuery & seajs");
 
 });

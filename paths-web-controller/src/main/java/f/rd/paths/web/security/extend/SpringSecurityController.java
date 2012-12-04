@@ -8,9 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /** 
- * <p>
  * SpringSecurity的一些核心用法
- * </p>
+ * <p>
  *  
  */
 public class SpringSecurityController {

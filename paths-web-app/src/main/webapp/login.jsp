@@ -9,6 +9,18 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.min.css'/>" />
 </head>
 <body onload='document.f.j_username.focus();'>
+
+	<header>
+	  <div class="container">
+	    <h2>Over-thinking leads to negative thoughts.</h2>
+	    <p class="lead">
+	      <span class="label label-success">1. 昨夜西风凋碧树，独上高楼，望尽天涯路。</span>
+	      <span class="label label-important">2. 衣带渐宽终不悔，为伊消得人憔悴。</span>
+	      <span class="label label-info">3. 众里寻他千百度，蓦然回首，那人却在灯火阑珊处。</span>
+	    </p>
+	  </div>
+	</header>
+	
 	<div class="container">
 		<form class="form-horizontal" name='f' action="<c:url value='/j_spring_security_check' />" method="post">
 			<fieldset>

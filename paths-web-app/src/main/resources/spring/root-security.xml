@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<debug />
+
+    <global-method-security pre-post-annotations="enabled" />
+	
+	<!-- 不做权限安全管理的部分 -->
+    <http pattern="/resource/**" security="none"/>
+    <http pattern="/login.jsp" security="none"/>
+
+    <http use-expressions="true" auto-config="true" access-denied-page="/403.jsp">
+        <!-- 如果在进行表单登陆之前，没有试图去访问一个被保护的资源，default-target-url 就会起作用。这是用户登陆后会跳转到的URL ， 默认是"/" 。你也可以把
+			always-use-default-target 属性配置成"true"，这样用户就会一直跳转到这一页（无论登陆是“跳转过来的”还是用户特定进行登陆）。如果你的系统一直需要用户从首页进入，就
+			可以使用它了 -->
+        <form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?error=true" 
+        	default-target-url="/clickHere" always-use-default-target="true" />
+        
+        <!-- 注销时处理,返回登录页 -->
+        <logout logout-success-url="/" delete-cookies="JSESSIONID"/>
+        
+        <!-- "记住我"功能，##采用持久化策略（将用户的登录信息存放在数据库表中） user-service-ref="userDetailsManager" -->
+        <!-- <remember-me user-service-ref="userDetailsManager" /> -->
+        
+        <!-- 登录超时处理及防止单个用户登录第二次 -->
+        <session-management invalid-session-url="/timeout.jsp">
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+        
+        <!-- ### 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。  -->
+  		<custom-filter ref="extendFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/> 
+        
+    </http>
+
+	<!-- 一个自定义的filter，必须包含authenticationManager, accessDecisionManager,securityMetadataSource三个属性。 -->
+	<beans:bean id="extendFilterSecurityInterceptor" class="f.rd.paths.web.security.extend.impl.ExtendFilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="extendAccessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="extendSecurityMetadataSource" />
+	</beans:bean>
+
+	<!-- 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源。 -->
+	<beans:bean id="extendAccessDecisionManager" class="f.rd.paths.web.security.extend.impl.ExtendAccessDecisionManager" />
+
+	<!-- 资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色去访问。 -->
+	<beans:bean id="extendSecurityMetadataSource" class="f.rd.paths.web.security.extend.impl.ExtendInvocationSecurityMetadataSource" />
+
+	<!-- 用户详细信息管理：数据源、用户缓存（通过数据库管理用户、角色、权限、资源）。 -->
+	<beans:bean id="extendUserDetailsManager" class="f.rd.paths.web.security.extend.impl.ExtendUserDetailsServiceImpl">
+		<beans:property name="userService" ref="userService" />
+		<beans:property name="authorityService" ref="authorityService" />
+	</beans:bean>
+	
+    <authentication-manager alias="authenticationManager">
+        <!-- 方案三： 自己扩展 -->
+        <authentication-provider user-service-ref="extendUserDetailsManager">
+			<password-encoder ref="passwordEncoder">
+				<salt-source user-property="username" />
+			</password-encoder>
+		</authentication-provider>
+    </authentication-manager>
+
+	<!-- 事件监听:实现了 ApplicationListener监听接口, 包括AuthenticationCredentialsNotFoundEvent事件， 
+		AuthorizationFailureEvent事件，AuthorizedEvent事件， PublicInvocationEvent事件。 -->
+	<beans:bean class="org.springframework.security.authentication.event.LoggerListener" />
+
+	<!-- 用户的密码加密或解密 -->
+	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+	<!-- 启用用户的缓存功能 
+	<beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<beans:property name="cache" ref="userEhCache" />
+	</beans:bean>
+
+	<beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<beans:property name="cacheName" value="userCache" />
+		<beans:property name="cacheManager" ref="cacheManager" />
+	</beans:bean> -->
+
+</beans:beans>

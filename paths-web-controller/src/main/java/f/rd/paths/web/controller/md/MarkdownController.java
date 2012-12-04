@@ -38,7 +38,7 @@ public class MarkdownController implements ServletContextAware {
 	
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	 private ServletContext servletContext;
+	private ServletContext servletContext;
 	 
 	/**
 	 * 实现ServletContextAware接口，获取本地路径
@@ -48,18 +48,18 @@ public class MarkdownController implements ServletContextAware {
 		this.servletContext = servletContext;
 	}
 	
-	@RequestMapping(value="/md-docs", method=RequestMethod.GET)
+	@RequestMapping(value="/mdocs", method=RequestMethod.GET)
 	public String preface(Model model) {
 		return getInnerHtml("preface", model);
 	}
 
 	/**
-	 * /md-docs/{title}: 会自动截断.md后缀
+	 * /mdocs/{title}: 会自动截断.md后缀
 	 * @param title
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/md-docs/{title}", method=RequestMethod.GET)
+	@RequestMapping(value="/mdocs/{title}", method=RequestMethod.GET)
 	public String title(@PathVariable String title, Model model) {
 		if ("".equals(title.trim())) {
 			title = "preface";
@@ -90,7 +90,7 @@ public class MarkdownController implements ServletContextAware {
 		// 转到html格式
 		PegDownProcessor peg = new PegDownProcessor();
 		model.addAttribute("innerHtml", peg.markdownToHtml(mdSource));
-		return "/md-docs";
+		return "/resources/md-docs/index";
 	}
 
 	
