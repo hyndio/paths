@@ -12,18 +12,24 @@
     <global-method-security pre-post-annotations="enabled" />
 	
 	<!-- 不做权限安全管理的部分 -->
-    <http pattern="/resource/**" security="none"/>
+    <http pattern="/resources/**" security="none"/>
     <http pattern="/login.jsp" security="none"/>
+    <http pattern="/accessDenied.jsp" security="none"/>
+    <http pattern="/timeout.jsp" security="none"/>
 
-    <http use-expressions="true" auto-config="true" access-denied-page="/403.jsp">
+    <http use-expressions="true" auto-config="true" access-denied-page="/accessDenied.jsp">
+    	
+    	<!-- 必须登录才能访问资源 -->
+    	<intercept-url pattern="/**" access="isAuthenticated()" />
+    	
         <!-- 如果在进行表单登陆之前，没有试图去访问一个被保护的资源，default-target-url 就会起作用。这是用户登陆后会跳转到的URL ， 默认是"/" 。你也可以把
 			always-use-default-target 属性配置成"true"，这样用户就会一直跳转到这一页（无论登陆是“跳转过来的”还是用户特定进行登陆）。如果你的系统一直需要用户从首页进入，就
 			可以使用它了 -->
         <form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?error=true" 
-        	default-target-url="/clickHere" always-use-default-target="true" />
+        	default-target-url="/home" always-use-default-target="true" />
         
         <!-- 注销时处理,返回登录页 -->
-        <logout logout-success-url="/" delete-cookies="JSESSIONID"/>
+        <logout logout-success-url="/" delete-cookies="JSESSIONID" />
         
         <!-- "记住我"功能，##采用持久化策略（将用户的登录信息存放在数据库表中） user-service-ref="userDetailsManager" -->
         <!-- <remember-me user-service-ref="userDetailsManager" /> -->

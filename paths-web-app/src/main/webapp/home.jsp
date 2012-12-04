@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,6 +22,13 @@
 	      <span class="label label-info">3. 众里寻他千百度，蓦然回首，那人却在灯火阑珊处。</span>
 	    </p>
 	    <div id="sss"></div>
+	    
+	    <sec:authorize access="isAuthenticated()">
+		    <div>
+		    	${staff.name }
+		    	<a href="<c:url value='/j_spring_security_logout' />">退出</a>
+		   	</div>
+	    </sec:authorize>
 	  </div>
 	</header>
 	
