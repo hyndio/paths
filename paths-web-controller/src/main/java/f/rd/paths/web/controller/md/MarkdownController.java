@@ -78,7 +78,7 @@ public class MarkdownController implements ServletContextAware {
 		String mdSource = "";
 		try {
 			// 获取本地存储路径
-			String localPath = this.servletContext.getRealPath(File.separator + "resources" + File.separator + "md-docs");
+			String localPath = this.servletContext.getRealPath(File.separator + "static" + File.separator + "md-docs");
 			Resource rs = new FileSystemResource(localPath + File.separator + title + ".md");
 			mdSource = IOUtils.toString(rs.getInputStream());
 		} catch (FileNotFoundException e) {
@@ -90,7 +90,7 @@ public class MarkdownController implements ServletContextAware {
 		// 转到html格式
 		PegDownProcessor peg = new PegDownProcessor();
 		model.addAttribute("innerHtml", peg.markdownToHtml(mdSource));
-		return "/resources/md-docs/index";
+		return "/static/md-docs/index";
 	}
 
 	

@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>登录页</title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.min.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/static/bootstrap/css/bootstrap.min.css'/>" />
 </head>
 <body onload='document.f.j_username.focus();'>
 

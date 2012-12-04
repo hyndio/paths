@@ -12,7 +12,7 @@
     <global-method-security pre-post-annotations="enabled" />
 	
 	<!-- 不做权限安全管理的部分 -->
-    <http pattern="/resources/**" security="none"/>
+    <http pattern="/static/**" security="none"/>
     <http pattern="/login.jsp" security="none"/>
     <http pattern="/accessDenied.jsp" security="none"/>
     <http pattern="/timeout.jsp" security="none"/>

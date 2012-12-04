@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Paths-Home</title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.min.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/static/bootstrap/css/bootstrap.min.css'/>" />
 </head>
 <body>
 
@@ -40,7 +40,7 @@
 	</h3>
 	
 	<!-- javascript -->
-	<script type="text/javascript" src="<c:url value='/resources/js/common/sea.js'/>" id="seajsnode" 
-		data-main="<c:url value='/resources/js/init/home.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/static/js/common/sea.js'/>" id="seajsnode" 
+		data-main="<c:url value='/static/js/init/home.js'/>"></script>
 </body>
 </html>
