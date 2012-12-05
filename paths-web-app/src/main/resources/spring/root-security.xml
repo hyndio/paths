@@ -61,6 +61,7 @@
 	<beans:bean id="extendUserDetailsManager" class="f.rd.paths.web.security.extend.impl.ExtendUserDetailsServiceImpl">
 		<beans:property name="userService" ref="userService" />
 		<beans:property name="authorityService" ref="authorityService" />
+		<beans:property name="userCache" ref="userCache" />
 	</beans:bean>
 	
     <authentication-manager alias="authenticationManager">
@@ -79,7 +80,7 @@
 	<!-- 用户的密码加密或解密 -->
 	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
 
-	<!-- 启用用户的缓存功能 
+	<!-- 启用用户的缓存功能 -->
 	<beans:bean id="userCache" class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
 		<beans:property name="cache" ref="userEhCache" />
 	</beans:bean>
@@ -87,6 +88,6 @@
 	<beans:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
 		<beans:property name="cacheName" value="userCache" />
 		<beans:property name="cacheManager" ref="cacheManager" />
-	</beans:bean> -->
+	</beans:bean> 
 
 </beans:beans>
