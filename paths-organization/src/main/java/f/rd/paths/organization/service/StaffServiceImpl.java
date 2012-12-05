@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 import f.rd.paths.organization.model.Staff;
 
 /** 
@@ -25,6 +27,7 @@ public class StaffServiceImpl implements StaffService {
 	/* (non-Javadoc)
 	 * @see f.rd.paths.organization.service.StaffService#get(java.lang.Integer)
 	 */
+	@Cacheable(cacheName="organization")
 	public Staff get(Integer id) {
 		Session session = this.sessionFactory.openSession();
 		return (Staff) session.get(Staff.class, id);

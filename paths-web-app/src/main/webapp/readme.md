@@ -1,6 +1,6 @@
 ## spring-mvc
 ## spring-security
 ## quartz
+## [Ehcache Annotations for Spring缓存管理](http://code.google.com/p/ehcache-spring-annotations/)
 spring web service
-hibernate二级缓存
 消息推送到工作空间

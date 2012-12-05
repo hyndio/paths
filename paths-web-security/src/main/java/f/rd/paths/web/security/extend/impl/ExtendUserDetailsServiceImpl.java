@@ -37,7 +37,7 @@ public class ExtendUserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private AuthorityService authorityService;
 	
-	@Autowired
+	@Autowired(required=false)
 	private UserCache userCache;
 	
 	public UserCache getUserCache() {

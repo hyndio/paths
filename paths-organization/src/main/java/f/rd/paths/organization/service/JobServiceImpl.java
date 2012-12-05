@@ -12,6 +12,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 import f.rd.paths.organization.model.JobType;
 import f.rd.paths.organization.model.StaffJob;
 
@@ -33,6 +35,7 @@ public class JobServiceImpl implements JobService {
 	/* (non-Javadoc)
 	 * @see f.rd.paths.organization.service.JobService#getStaffJob(java.lang.Integer)
 	 */
+	@Cacheable(cacheName="organization")
 	public JobType getStaffJob(Integer staff) {
 		Session session = this.sessionFactory.openSession();
 		return (JobType) session.get(StaffJob.class, staff);
@@ -41,6 +44,7 @@ public class JobServiceImpl implements JobService {
 	/* (non-Javadoc)
 	 * @see f.rd.paths.organization.service.JobService#getStaffParttime(java.lang.Integer)
 	 */
+	@Cacheable(cacheName="organization")
 	public List<JobType> getStaffParttime(Integer staff) {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from StaffParttime s where s.staff=:staff").setInteger("staff", staff);
