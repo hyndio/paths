@@ -40,7 +40,7 @@
         </session-management>
         
         <!-- ### 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。  -->
-  		<custom-filter ref="extendFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/> 
+  		<custom-filter ref="extendFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" /> 
         
     </http>
 
