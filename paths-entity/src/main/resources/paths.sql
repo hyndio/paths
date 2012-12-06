@@ -1,205 +1,199 @@
-﻿# Host: localhost  (Version: 5.1.38-community)
-# Date: 2012-11-16 10:49:25
-# Generator: MySQL-Front 5.3  (Build 1.18)
+delimiter $$
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE */;
-/*!40101 SET SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES */;
-/*!40103 SET SQL_NOTES='ON' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS */;
-/*!40014 SET FOREIGN_KEY_CHECKS=0 */;
+CREATE TABLE `org_office` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '机构（部门）标识',
+  `code` varchar(45) DEFAULT NULL COMMENT '机构（单位）编码',
+  `name` varchar(256) NOT NULL COMMENT '机构（部门）名称',
+  `parent` int(11) DEFAULT NULL COMMENT '上级机构（部门）',
+  `duty` text COMMENT '机构（部门）职责',
+  `order` int(11) DEFAULT 1 NOT NULL COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='机构（部门）表';$$
 
-#
-# Source for table "sec_authority"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `sec_authority`;
-CREATE TABLE `sec_authority` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `name_` varchar(100) NOT NULL,
-  `desc_` varchar(256) DEFAULT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  `issys_` varchar(10) NOT NULL,
-  `module_` varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `org_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(256) NOT NULL,
+  `office` int(11) DEFAULT NULL COMMENT '所属机构（部门）',
+  `parent` int(11) DEFAULT NULL COMMENT '上级岗位',
+  `level` tinyint(4) DEFAULT NULL COMMENT '级别',
+  `duty` text COMMENT '岗位职责',
+  `order` int(11) DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`),
+  KEY `org_job_fk_1_idx` (`office`),
+  CONSTRAINT `org_job_fk_1` FOREIGN KEY (`office`) REFERENCES `org_office` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位表';$$
 
-#
-# Data for table "sec_authority"
-#
+delimiter $$
 
-/* 根据权限名查找对应的所有资源名
-select r.string_ from sec_auth_reso j
-left join sec_resource r on j.reso_ = r.id_
-left join sec_authority a on j.auth_=a.id_
-where a.name_='';
-*/
-/* 根据用户名查找所对应的所有权限名 
-select * from sec_user_role ur 
-left join sec_user u on ur.user_=u.id_
-left join sec_role_auth ra on ur.role_=ra.role_
-left join sec_auth a on ra.auth_=a.id_
-where u.account_='';
-*/
+CREATE TABLE `org_staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '人员标识',
+  `code` varchar(45) DEFAULT NULL COMMENT '人员公司编码',
+  `name` varchar(256) NOT NULL COMMENT '姓名',
+  `diff` varchar(50) DEFAULT NULL COMMENT '名字后缀，用来区分同名的人',
+  `gender` varchar(6) NOT NULL DEFAULT 'unknow' COMMENT '性别，男male, 女female, 未知unknow',
+  `office` int(11) NOT NULL COMMENT '所属机构（部门）',
+  `officeRoom` varchar(256) DEFAULT NULL COMMENT '办公室门牌号',
+  `officeCall` varchar(20) DEFAULT NULL COMMENT '办公室电话号码',
+  `mobilePhone` varchar(20) DEFAULT NULL COMMENT '移动电话号码',
+  `order` int(11) DEFAULT 1 NOT NULL COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`),
+  KEY `org_staff_fk_2_idx` (`id`),
+  CONSTRAINT `org_staff_fk_2` FOREIGN KEY (`office`) REFERENCES `org_office` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='人员基础信息';$$
 
+delimiter $$
 
-#
-# Source for table "sec_resource"
-#
+CREATE TABLE `org_title` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位的敬称';$$
 
-DROP TABLE IF EXISTS `sec_resource`;
-CREATE TABLE `sec_resource` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `name_` varchar(256) DEFAULT NULL,
-  `desc_` varchar(256) DEFAULT NULL,
-  `type_` varchar(40) DEFAULT NULL,
-  `string_` varchar(256) DEFAULT NULL,
-  `priority` smallint(6) DEFAULT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  `issys_` varchar(10) NOT NULL,
-  `module_` varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+delimiter $$
 
-#
-# Data for table "sec_resource"
-#
+CREATE TABLE `ss3_authority` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL COMMENT 'spring security的编码，\\"ROLE_\\"开头',
+  `name` varchar(256) NOT NULL COMMENT '权限名',
+  `order` int(11) DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';$$
 
+delimiter $$
 
-#
-# Source for table "sec_auth_reso"
-#
-
-DROP TABLE IF EXISTS `sec_auth_reso`;
-CREATE TABLE `sec_auth_reso` (
-  `auth_` int(11) NOT NULL,
-  `reso_` int(11) NOT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  PRIMARY KEY (`auth_`,`reso_`),
-  KEY `auth_` (`auth_`),
-  KEY `reso_` (`reso_`),
-  CONSTRAINT `sec_auth_fkreso` FOREIGN KEY (`reso_`) REFERENCES `sec_resource` (`id_`) ON DELETE CASCADE,
-  CONSTRAINT `sec_fkauth_reso` FOREIGN KEY (`auth_`) REFERENCES `sec_authority` (`id_`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "sec_auth_reso"
-#
+CREATE TABLE `ss3_resource` (
+  `id` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL COMMENT '资源名',
+  `uri` varchar(256) DEFAULT NULL COMMENT '定位符',
+  `parent` int(11) DEFAULT NULL,
+  `order` int(11) DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表';$$
 
 
-#
-# Source for table "sec_role"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `sec_role`;
-CREATE TABLE `sec_role` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `name_` varchar(256) NOT NULL,
-  `desc_` varchar(256) DEFAULT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  `issys_` varchar(10) NOT NULL,
-  `module_` varchar(5) DEFAULT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ss3_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL COMMENT '角色名称',
+  `order` int(11) DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色';$$
 
-#
-# Data for table "sec_role"
-#
+delimiter $$
 
+CREATE TABLE `org_jobtitle` (
+  `job` int(11) NOT NULL,
+  `title` int(11) DEFAULT NULL,
+  PRIMARY KEY (`job`),
+  KEY `org_jobtitle_fk1_idx` (`job`),
+  KEY `org_jobtitle_fk2_idx` (`title`),
+  CONSTRAINT `org_jobtitle_fk1` FOREIGN KEY (`job`) REFERENCES `org_job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `org_jobtitle_fk2` FOREIGN KEY (`title`) REFERENCES `org_title` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位与敬称';$$
 
-#
-# Source for table "sec_role_auth"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `sec_role_auth`;
-CREATE TABLE `sec_role_auth` (
-  `role_` int(11) NOT NULL,
-  `auth_` int(11) NOT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  PRIMARY KEY (`role_`,`auth_`),
-  KEY `role_` (`role_`),
-  KEY `auth_` (`auth_`),
-  CONSTRAINT `sec_role_fkauth` FOREIGN KEY (`auth_`) REFERENCES `sec_authority` (`id_`) ON DELETE CASCADE,
-  CONSTRAINT `sec_fkrole_auth` FOREIGN KEY (`role_`) REFERENCES `sec_role` (`id_`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `org_officesupervisor` (
+  `office` int(11) NOT NULL,
+  `job` int(11) DEFAULT NULL,
+  PRIMARY KEY (`office`),
+  KEY `org_officesupervisor_idx` (`office`),
+  KEY `org_officesupervisor_fk2_idx` (`job`),
+  CONSTRAINT `org_officesupervisor_fk1` FOREIGN KEY (`office`) REFERENCES `org_office` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `org_officesupervisor_fk2` FOREIGN KEY (`job`) REFERENCES `org_job` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门主管';$$
 
-#
-# Data for table "sec_role_auth"
-#
+delimiter $$
 
+CREATE TABLE `org_staffjob` (
+  `staff` int(11) NOT NULL,
+  `job` int(11) DEFAULT NULL,
+  PRIMARY KEY (`staff`),
+  KEY `org_staffjob_fk1_idx` (`staff`),
+  KEY `org_staffjob_fk2_idx` (`job`),
+  CONSTRAINT `org_staffjob_fk1` FOREIGN KEY (`staff`) REFERENCES `org_staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `org_staffjob_fk2` FOREIGN KEY (`job`) REFERENCES `org_job` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员岗位表';$$
 
-#
-# Source for table "sec_user"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `sec_user`;
-CREATE TABLE `sec_user` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `account_` varchar(100) NOT NULL,
-  `name_` varchar(50) NOT NULL,
-  `password_` varchar(256) DEFAULT NULL,
-  `desc_` varchar(256) DEFAULT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  `issys_` varchar(10) NOT NULL,
-  `dept_` int(11) DEFAULT NULL,
-  `duty_` varchar(256) DEFAULT NULL,
-  `subsystem_` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "sec_user"
-#
+CREATE TABLE `org_staffparttime` (
+  `id` int(11) NOT NULL,
+  `staff` int(11) NOT NULL,
+  `job` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `staff_job_UNIQUE` (`staff`,`job`),
+  KEY `org_staffparttime_fk1_idx` (`staff`),
+  KEY `org_staffparttime_fk2_idx` (`job`),
+  CONSTRAINT `org_staffparttime_fk1` FOREIGN KEY (`staff`) REFERENCES `org_staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `org_staffparttime_fk2` FOREIGN KEY (`job`) REFERENCES `org_job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员兼职';$$
 
 
-#
-# Source for table "sec_user_role"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `sec_user_role`;
-CREATE TABLE `sec_user_role` (
-  `user_` int(11) NOT NULL,
-  `role_` int(11) NOT NULL,
-  `enabled_` smallint(6) NOT NULL,
-  PRIMARY KEY (`user_`,`role_`),
-  KEY `user_` (`user_`),
-  KEY `role_` (`role_`),
-  CONSTRAINT `sec_user_fkrole` FOREIGN KEY (`role_`) REFERENCES `sec_role` (`id_`) ON DELETE CASCADE,
-  CONSTRAINT `sec_fkuser_role` FOREIGN KEY (`user_`) REFERENCES `sec_user` (`id_`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ss3_auth_reso` (
+  `id` int(11) not null,
+  `authority` int(11) NOT NULL,
+  `resource` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `authority_resource_UNIQUE` (`authority`,`resource`),
+  KEY `ss3_auth_reso_fk1_idx` (`authority`),
+  KEY `ss3_auth_reso_fk2_idx` (`resource`),
+  CONSTRAINT `ss3_auth_reso_fk1` FOREIGN KEY (`authority`) REFERENCES `ss3_authority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ss3_auth_reso_fk2` FOREIGN KEY (`resource`) REFERENCES `ss3_resource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限与资源关系';$$
 
-#
-# Data for table "sec_user_role"
-#
+delimiter $$
+
+CREATE TABLE `ss3_job_role` (
+  `id` int(11) not null,
+  `job` int(11) NOT NULL,
+  `role` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `job_role_UNIQUE` (`job`,`role`),
+  KEY `org_jobrole_fk1_idx` (`job`),
+  KEY `org_jobrole_fk2_idx` (`role`),
+  CONSTRAINT `org_jobrole_fk1` FOREIGN KEY (`job`) REFERENCES `org_job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `org_jobrole_fk2` FOREIGN KEY (`role`) REFERENCES `ss3_role` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='岗位与角色关联';$$
+
+delimiter $$
+
+CREATE TABLE `ss3_role_auth` (
+  `id` int(11) not null,
+  `role` int(11) NOT NULL,
+  `authority` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role_authority_UNIQUE` (`role`,`authority`),
+  KEY `ss3_role_auth_fk1_idx` (`role`),
+  KEY `ss3_role_auth_fk2_idx` (`authority`),
+  CONSTRAINT `ss3_role_auth_fk1` FOREIGN KEY (`role`) REFERENCES `ss3_role` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `ss3_role_auth_fk2` FOREIGN KEY (`authority`) REFERENCES `ss3_authority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与权限';$$
 
 
-#
-# Source for table "t_account"
-#
+delimiter $$
 
-DROP TABLE IF EXISTS `t_account`;
-CREATE TABLE `t_account` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `cashBalance` double DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `ss3_user` (
+  `staff` int(11) NOT NULL COMMENT '人员标识',
+  `username` varchar(50) NOT NULL COMMENT '登录名',
+  `password` varchar(100) NOT NULL COMMENT '登录密码',
+  `enabled` tinyint(4) NOT NULL DEFAULT '1' COMMENT '账号是否可用，1可用，0停用',
+  `online` varchar(5) NOT NULL COMMENT '是否在线, yes, no',
+  PRIMARY KEY (`staff`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  KEY `ss3_user_fk_1_idx` (`staff`),
+  CONSTRAINT `ss3_user_fk_1` FOREIGN KEY (`staff`) REFERENCES `org_staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录信息表';$$
 
-#
-# Data for table "t_account"
-#
 
-INSERT INTO `t_account` VALUES (1,500,'John Smith'),(2,1000,'Bernard Dupont'),(3,1500,'Bart Simpson');
-
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
