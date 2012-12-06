@@ -34,7 +34,9 @@ public class UserServiceImpl implements UserService {
 	 */
 	public User get(Integer staff) {
 		Session session = this.sessionFactory.openSession();
-		return (User) session.get(User.class, staff);
+		User user = (User) session.get(User.class, staff);
+		session.close();
+		return user;
 	}
 
 	/**
@@ -45,7 +47,9 @@ public class UserServiceImpl implements UserService {
 	public User get(String username) {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from User a where a.username=:username").setString("username", username);
-		return (User) query.uniqueResult();
+		User user = (User) query.uniqueResult();
+		session.close();
+		return user;
 	}
 
 }

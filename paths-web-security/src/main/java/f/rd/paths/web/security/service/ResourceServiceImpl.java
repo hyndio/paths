@@ -43,7 +43,9 @@ public class ResourceServiceImpl implements ResourceService {
 		}
 		Criteria criteria = session.createCriteria(Resource.class);
 		criteria.add(Restrictions.in("id", resoIds));
-		return criteria.list();
+		List<Resource> list = criteria.list();
+		session.close();
+		return list;
 	}
 	
 	/**
@@ -55,7 +57,9 @@ public class ResourceServiceImpl implements ResourceService {
 	private List<AuthoResource> getAuthoResources(Integer authority) {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from AuthoResource a where a.authority=:authority").setInteger("authority", authority);
-		return query.list();
+		List<AuthoResource> list = query.list();
+		session.close();
+		return list;
 	}
 	
 

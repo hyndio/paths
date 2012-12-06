@@ -38,17 +38,22 @@ public class JobServiceImpl implements JobService {
 	@Cacheable(cacheName="organization")
 	public JobType getStaffJob(Integer staff) {
 		Session session = this.sessionFactory.openSession();
-		return (JobType) session.get(StaffJob.class, staff);
+		JobType jobType = (JobType) session.get(StaffJob.class, staff);
+		session.close();
+		return jobType;
 	}
 
 	/* (non-Javadoc)
 	 * @see f.rd.paths.organization.service.JobService#getStaffParttime(java.lang.Integer)
 	 */
+	@SuppressWarnings("unchecked")
 	@Cacheable(cacheName="organization")
 	public List<JobType> getStaffParttime(Integer staff) {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from StaffParttime s where s.staff=:staff").setInteger("staff", staff);
-		return query.list();
+		List<JobType> list = query.list();
+		session.close();
+		return list;
 	}
 
 }

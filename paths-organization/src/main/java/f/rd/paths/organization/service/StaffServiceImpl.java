@@ -30,7 +30,9 @@ public class StaffServiceImpl implements StaffService {
 	@Cacheable(cacheName="organization")
 	public Staff get(Integer id) {
 		Session session = this.sessionFactory.openSession();
-		return (Staff) session.get(Staff.class, id);
+		Staff staff = (Staff) session.get(Staff.class, id);
+		session.close();
+		return staff;
 	}
 
 }

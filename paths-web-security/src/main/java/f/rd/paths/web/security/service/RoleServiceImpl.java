@@ -39,6 +39,7 @@ public class RoleServiceImpl implements RoleSerivce {
 	public List<JobRole> getJobRole(Integer job) {
 		Session session = this.sessionFactory.openSession();
 		List<JobRole> jobRole = (List<JobRole>) session.createQuery("from JobRole j where j.job=:job").setInteger("job", job).list();
+		session.close();
 		return jobRole;
 	}
 
@@ -54,7 +55,9 @@ public class RoleServiceImpl implements RoleSerivce {
 		}
 		Criteria criteria = session.createCriteria(JobRole.class);
 		criteria.add(Restrictions.in("job", jobIds));
-		return criteria.list();
+		List<JobRole> list = criteria.list();
+		session.close();
+		return list;
 	}
 
 }

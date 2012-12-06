@@ -88,7 +88,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 		Session session = this.sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Authority.class);
 		criteria.add(Restrictions.in("id", authIds));
-		return criteria.list();
+		List<Authority> list = criteria.list();
+		session.close();
+		return list;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -101,7 +103,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 		Session session = this.sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(RoleAuthority.class);
 		criteria.add(Restrictions.in("role", roleIds));
-		return criteria.list();
+		List<RoleAuthority> list = criteria.list();
+		session.close();
+		return list;
 	}
 
 	/* (non-Javadoc)
@@ -111,7 +115,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 	public List<Authority> getAllAuthorities() {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from Authority a");
-		return query.list();
+		List<Authority> list = query.list();
+		session.close();
+		return list;
 	}
 
 }

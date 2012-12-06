@@ -73,6 +73,8 @@ public class ExtendInvocationSecurityMetadataSource implements FilterInvocationS
 				}
 			}
 		}
+		
+		session.close();
 	}
 
 	// 根据URL，找到相关的权限配置。
