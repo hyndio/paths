@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 
@@ -36,6 +37,7 @@ public class JobServiceImpl implements JobService {
 	 * @see f.rd.paths.organization.service.JobService#getStaffJob(java.lang.Integer)
 	 */
 	@Cacheable(cacheName="organization")
+	@Transactional(readOnly=true)
 	public JobType getStaffJob(Integer staff) {
 		Session session = this.sessionFactory.openSession();
 		JobType jobType = (JobType) session.get(StaffJob.class, staff);
@@ -48,6 +50,7 @@ public class JobServiceImpl implements JobService {
 	 */
 	@SuppressWarnings("unchecked")
 	@Cacheable(cacheName="organization")
+	@Transactional(readOnly=true)
 	public List<JobType> getStaffParttime(Integer staff) {
 		Session session = this.sessionFactory.openSession();
 		Query query = session.createQuery("from StaffParttime s where s.staff=:staff").setInteger("staff", staff);

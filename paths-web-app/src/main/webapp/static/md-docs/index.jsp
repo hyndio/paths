@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>工程文档</title>
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/bootstrap/css/bootstrap.min.css'/>" />
+<link rel="stylesheet" type="text/css" href="<c:url value='/static/bootstrap/css/bootstrap.min.css'/>" />
 <style type="text/css">
 body {
 	margin: 20px 0;
@@ -15,10 +15,10 @@ body {
 }
 
 #the-show-area {
-	width: 720px;
+	width: 760px;
 	border-radius: 3px;
   	border: 1px solid #e1e1e8;
-  	padding: 10px;
+  	padding: 20px;
 }
 </style>
 </head>
