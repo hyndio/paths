@@ -9,6 +9,7 @@ import java.util.List;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*; 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -34,14 +35,14 @@ public class JobServiceTest {
 	@Autowired
 	private JobService jobService;
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void job() {
 		JobType job = this.jobService.getStaffJob(1);
 		assertThat(job.getJob(), is(1));
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void parttime() {
 		List<JobType> jobs = this.jobService.getStaffParttime(1);
