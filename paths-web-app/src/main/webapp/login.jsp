@@ -39,9 +39,15 @@
 						<input type="password" id="inputPassword" name="j_password" placeholder="密码">
 					</div>
 				</div>
-
-				<!-- <td><input type='checkbox' name='_spring_security_remember_me' /></td>
-				<td>Remember me on this computer.</td> -->
+				
+				<!-- 
+				<div class="control-group">
+					<label class="control-label" for="_spring_security_remember_me">记住我</label>
+					<div class="controls">
+						<input type='checkbox' id="_spring_security_remember_me" name='_spring_security_remember_me' />
+					</div>
+				</div>
+				 -->
 
 				<div class="control-group">
 					<div class="form-actions">

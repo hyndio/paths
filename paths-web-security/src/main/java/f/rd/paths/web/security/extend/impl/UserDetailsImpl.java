@@ -120,10 +120,6 @@ public class UserDetailsImpl implements UserDetails, CredentialsContainer {
         return credentialsNonExpired;
     }
 
-    public void eraseCredentials() {
-        password = null;
-    }
-
     private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
         // Ensure array iteration order is predictable (as per UserDetails.getAuthorities() contract and SEC-717)
@@ -209,5 +205,12 @@ public class UserDetailsImpl implements UserDetails, CredentialsContainer {
 
         return sb.toString();
     }
+
+	/* (non-Javadoc)
+	 * @see org.springframework.security.core.CredentialsContainer#eraseCredentials()
+	 */
+	public void eraseCredentials() {
+		this.password = null;
+	}
 
 }

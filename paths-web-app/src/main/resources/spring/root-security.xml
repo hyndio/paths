@@ -28,11 +28,12 @@
         <form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?error=true" 
         	default-target-url="/home" always-use-default-target="true" />
         
-        <!-- 注销时处理,返回登录页 -->
-        <logout logout-success-url="/" delete-cookies="JSESSIONID" />
+        <!-- 注销时处理,返回登录页 delete-cookies="JSESSIONID" -->
+        <logout logout-success-url="/" />
         
-        <!-- "记住我"功能，##采用持久化策略（将用户的登录信息存放在数据库表中） user-service-ref="userDetailsManager" -->
-        <!-- <remember-me user-service-ref="userDetailsManager" /> -->
+        <!-- "记住我"功能，##采用持久化策略（将用户的登录信息存放在数据库表中） user-service-ref="extendUserDetailsManager" 
+        <remember-me key="paths" use-secure-cookie="true" user-service-ref="extendUserDetailsManager" />
+        -->
         
         <!-- 登录超时处理及防止单个用户登录第二次 -->
         <session-management invalid-session-url="/timeout.jsp">
@@ -64,7 +65,7 @@
 		<beans:property name="userCache" ref="userCache" />
 	</beans:bean>
 	
-    <authentication-manager alias="authenticationManager">
+    <authentication-manager alias="authenticationManager" erase-credentials="false">
         <!-- 方案三： 自己扩展 -->
         <authentication-provider user-service-ref="extendUserDetailsManager">
 			<password-encoder ref="passwordEncoder">
